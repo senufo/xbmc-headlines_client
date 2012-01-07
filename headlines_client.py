@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 
 import urllib, os.path, xbmc, re, htmlentitydefs, time
 
@@ -9,7 +10,6 @@ import xbmcaddon
 import xbmcgui, sys
 #import rss
 #from rss import ImageCacher, RSSFeedsListLoader, RSSReader, RSSSet, RSSSource, TimeZoneHandler
-from headlines_parse import *
 
 __addonID__  = "script.headlines_client"
 __addon__    = xbmcaddon.Addon( __addonID__ )
@@ -17,6 +17,11 @@ __settings__ = __addon__
 __addonDir__ = __settings__.getAddonInfo( "path" )
 
 DEBUG = True 
+#Importation du module headlines_parse du script headlines_daemon
+settings_addonDaemon =  xbmcaddon.Addon( "service.headlines_daemon" )
+addonDirDaemon = settings_addonDaemon.getAddonInfo( "path" )
+sys.path.append(addonDirDaemon)
+from headlines_parse import *
 
 #Teste si le repertoire script.headlines existe
 DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.headlines/")
