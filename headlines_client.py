@@ -62,37 +62,6 @@ if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 addon = xbmcaddon.Addon('script.headlines_client')
 
-RssFeedsPath = xbmc.translatePath('special://userdata/RssFeeds.xml')
-if DEBUG == True: print "[headlines_client]RssFeedsPath = %s " % RssFeedsPath
-try:
-    feedsTree = parse(RssFeedsPath)
-except:
-    if DEBUG == True: print "[headlines_client]Erreur self.feedsTree"
-#Recupere la liste des flux dans RSSFeeds.xml
-if feedsTree:
-    #self.feedsList = self.getCurrentRssFeeds()
-    feedsList = dict()
-    sets = feedsTree.getElementsByTagName('set')
-    for s in sets:
-        setName = 'set'+s.attributes["id"].value
-        if DEBUG == True: print "[headlines_client]SETNAME = %s " % setName
-        feedsList[setName] = {'feedslist':list(), 'attrs':dict()}
-        #get attrs
-        for attrib in s.attributes.keys():
-            feedsList[setName]['attrs'][attrib] = s.attributes[attrib].value
-        #get feedslist
-        feeds = s.getElementsByTagName('feed')
-        for feed in feeds:
-            feedsList[setName]['feedslist'].append({'url':feed.firstChild.toxml(), 'updateinterval':feed.attributes['updateinterval'].value})
-     
-if DEBUG == True: print "[headlines_client]feed 1  = %s " % feedsList['set1']['feedslist'][0]['url']
-set = feedsList['set1']['feedslist'][0]['url']
-#On recupere l'url et on la transforme en non de fichier
-file = re.sub('^http://.*/','Rss-',set)
-RssFeeds = '%s/%s' % (DATA_PATH,file)
-if DEBUG == True: print "[headlines_client]file = %s " % RssFeeds
-
-
 for arg in sys.argv:
 
     param = str(arg).lower()
@@ -121,7 +90,7 @@ for arg in sys.argv:
         if not prefix.endswith('.'):
             prefix = prefix + '.'
     if 'feed=' in param:
-        feeds.append(param.replace('feed=', ''))
+        #feeds.append(param.replace('feed=', ''))
         NoSet = param.replace('feed=', '')
         RssFeeds = NoSet
         
@@ -146,12 +115,6 @@ for arg in sys.argv:
         elif 'false' in param:
             ForceMultiThread = False       
            
-#    if param != 'script.headlines_client':
-#        args = args + ',' + arg
-
-if DEBUG == True: print "[headlines_client]FEED = %s, ,NoSet = %s, limit = %d " % (feeds , NoSet, limit)
-#print "feed %d  = %s " % (int(NoSet),feedsList['set%s' %
-#                                              NoSet]['feedslist'][0]['url'])
 headlines = []
 filename = re.sub('^http://.*/','Rss-',RssFeeds)
 filename = '%s/%s' % (DATA_PATH,filename)
