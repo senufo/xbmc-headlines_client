@@ -1,0 +1,20 @@
+Pour charger les RSS il faut d'abord mettre au début de votre fichier xml:
+
+<onload>XBMC.RunScript(script.headlines_client,feed=http://monurl_rss.org/feed/demo,limit=10)</onload>
+
+feed : c'est L'url de votre flux RSS ou ATOM
+limit : c'est le nombre maximum de news que vous voulez récupérer
+
+Ensuite vous appeller les properties de la façon suivante :
+
+$INFO[Window.property(RSS.X.Title)]
+
+où X représente le numéro de la news que vous voulez récupérer
+
+Il y a  properties définies :
+        RSS.X.Title : titre de la news
+        RSS.X.Date : date de la news
+        RSS.X.Desc : Contenu de la news
+        RSS.X.Img : Fichier Img lié à la news, est à False si pas d'image
+        RSS.X.Video : Lien vers la vidéo, est vide si pas de vidéo
+

@@ -1,0 +1,18 @@
+To load the RSS must first put the beginning of your XML file:
+
+feed: This is the URL of your RSS or ATOM
+limit: the maximum number of news you want to recover
+
+Then you call the properties as follows:
+
+$INFO[Window.property (RSS.X.Title)]
+
+where X is the number of the news you want to recover
+
+There are properties defined:
+         RSS.X.Title: title of the news
+         RSS.X.Date: date of the news
+         RSS.X.Desc: What's in the news
+         RSS.X.Img: Img File-related news, is False if no picture
+         RSS.X.Video: Link to video, is empty if no video
+

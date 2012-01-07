@@ -4,18 +4,20 @@
        version="0.0.2"
        provider-name="senufo">
   <requires>
- <import addon="xbmc.python" version="2.0"/>
- <!-- <import addon="xbmc.gui" version="3.00"/> -->
-   <!--<import addon="script.rss.editor" version="1.6.1"/>-->
-   <!--  <import addon="plugin.video.youtube" version="2.0.3"/>
-   <import addon="script.module.rssengine" version="1.0.3" />
-     <import addon="script.ImageCacher" version="0.0.3" /> -->
+          <import addon="xbmc.python" version="2.0"/>
+          <import addon="headlines_daemon" version="0.0.7">
   </requires>
   <extension point="xbmc.python.script"
              library="headlines_client.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">RSS Client Background</summary>
-    <description lang="en">For skinners to attach RSS feeds into the skins. Read more in howto.md attached to addon or on https://github.com/pieh/pieh-xbmc-addons/blob/master/script.rssclient/howto.md</description>
+          <summary lang="en">RSS/ATOM Client for skinner</summary>
+          <summary lang="fr">RSS/ATOM Client pour inclure vos RSS dans vos skinsr</summary>
+          <description lang="en">For skinners to attach RSS feeds into the skins. 
+          To learn how to include them please read the file
+          </description>
+          <description lang="fr">Pour les skinners qui veulent intégrer leur flux RSS dans leurs skins. 
+          Pour savoir comment les inclure veuillez lire le fichier README            
+          </description>
     <platform>all</platform>
   </extension>
 </addon>
