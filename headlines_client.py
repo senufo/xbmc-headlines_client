@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import os.path, xbmc, re, htmlentitydefs, time
-
-from xbmcgui import Window, WindowDialog
+import os.path, xbmc, re, htmlentitydefs
+from xbmcgui import Window
 import pickle
 import xbmcaddon
 import xbmcgui, sys
@@ -52,7 +51,7 @@ def htmlentitydecode(s):
     t = re.sub(u'&#(\d+);', lambda x: unichr(int(x.group(1))), t)
    
     # Then convert hexa entities (such as &#x00E9;)
-    return re.sub(u'&#x(\w+);', lambda x: unichr(int(x.group(1),16)), t)
+    return re.sub(u'&#x(\w+);', lambda x: unichr(int(x.group(1), 16)), t)
 
 def cleanText(txt):
     p = re.compile(r'\s+')
