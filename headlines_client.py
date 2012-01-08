@@ -14,11 +14,12 @@ __addon__    = xbmcaddon.Addon( __addonID__ )
 __settings__ = __addon__
 __addonDir__ = __settings__.getAddonInfo( "path" )
 
-DEBUG = __addon__.getSetting( 'debug' )
-if 'true' in DEBUG : DEBUG = 'True'
-else: DEBUG = None
-print "Debug = %s " % DEBUG
-#DEBUG = True 
+DEBUG_LOG = __addon__.getSetting( 'debug' )
+if 'true' in DEBUG_LOG : DEBUG_LOG = True
+else: DEBUG_LOG = False
+#print "(20) Debug = %s " % DEBUG_LOG
+
+#DEBUG_LOG = True 
 #Importation du module headlines_parse du script headlines_daemon
 settings_addonDaemon =  xbmcaddon.Addon( "service.headlines_daemon" )
 addonDirDaemon = settings_addonDaemon.getAddonInfo( "path" )
@@ -28,6 +29,13 @@ from headlines_parse import *
 #Teste si le repertoire script.headlines existe
 DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.headlines/")
 if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
+#Function Debug
+
+def debug(msg):
+    """
+    print message if DEBUG_LOG == True
+    """
+    if DEBUG_LOG == True: print " [%s] : %s " % (__addonID__,msg)
 
 #Nettoie le code HTML d'après rssclient de xbmc
 def htmlentitydecode(s):
@@ -63,11 +71,12 @@ DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.headlines/"
 if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 addon = xbmcaddon.Addon('script.headlines_client')
+debug('HEADLINES CLIENT')
 
 for arg in sys.argv:
 
     param = str(arg).lower()
-    if DEBUG == 'True':  print "[headlines_client]param = %s " % param
+    debug("param = %s " % param)
     if 'window' == param:
         isWindow = True
         ID = -1
@@ -97,17 +106,17 @@ headlines = []
 #Récupère l'url du flux et le change en nom de fichier
 filename = re.sub('^http://.*/','Rss-',RssFeeds)
 filename = '%s/%s' % (DATA_PATH,filename)
-if DEBUG == 'True':  print "[headlines_client] => %s-headlines" % filename
+debug("=> %s-headlines" % filename)
 #Si il existe on l'ouvre
 if (os.path.isfile('%s-headlines' % filename)):
-    if DEBUG == 'True':  print "[headlines_client] 146"
+    debug("146")
     pkl_file = open(('%s-headlines' % filename), 'rb')
     headlines = pickle.load(pkl_file)
     pkl_file.close()
-    if DEBUG == 'True':  print "[headlines_client] 150"
+    debug(" 150")
 #Sinon on appelle la Class ParsRSS pour le parser puis le sauver sur disque
 else:
-    if DEBUG == 'True':  print "[headlines_client]Erreur ouverture HEADLINES"
+    debug("Erreur ouverture HEADLINES")
     RSStream = ParseRSS()
     RSStream.getRSS(RssFeeds)
     try:
@@ -120,7 +129,7 @@ else:
         headlines.append(('Indisponible',
                      'Indisponible','Indisponible','Indisponible','Indisponible','Indisponible'))
 
-if DEBUG == 'True':  print "[headlines_client]Feed= %s " % RssFeeds
+debug("Feed= %s " % RssFeeds)
 
 #On récupère l'ID de la fenêtre de skin qui à lancer le script
 okno = Window(xbmcgui.getCurrentWindowId())
@@ -140,5 +149,5 @@ for i in range(0,limit):
     okno.setProperty('RSS.%s.Desc' % i , html)
     okno.setProperty('RSS.%s.Img' % i , headlines[i][4])
     okno.setProperty('RSS.%s.Video' % i , headlines[i][5])
-    if DEBUG == 'True':  print "[headlines_client]%i => %s " % (i,repr(headlines[i][0]))
+    debug("%i => %s " % (i,repr(headlines[i][0])))
     

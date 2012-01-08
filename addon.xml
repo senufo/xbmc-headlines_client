@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.headlines_client"
-       name="RSS Client Background"
+       name="Headlines Client for skinner"
        version="0.0.7"
        provider-name="senufo">
   <requires>
           <import addon="xbmc.python" version="2.0"/>
-          <import addon="headlines_daemon" version="0.0.7">
+          <import addon="headlines_daemon" version="0.0.7"/>
   </requires>
   <extension point="xbmc.python.script"
              library="headlines_client.py" />
