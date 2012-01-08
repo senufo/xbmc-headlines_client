@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-import sys
-
-import urllib, os.path, xbmc, re, htmlentitydefs, time
+import os.path, xbmc, re, htmlentitydefs, time
 
 from xbmcgui import Window, WindowDialog
-from xml.dom.minidom import parse, Document, _write_data, Node, Element
 import pickle
 import xbmcaddon
 import xbmcgui, sys
@@ -17,9 +14,7 @@ __addonDir__ = __settings__.getAddonInfo( "path" )
 DEBUG_LOG = __addon__.getSetting( 'debug' )
 if 'true' in DEBUG_LOG : DEBUG_LOG = True
 else: DEBUG_LOG = False
-#print "(20) Debug = %s " % DEBUG_LOG
 
-#DEBUG_LOG = True 
 #Importation du module headlines_parse du script headlines_daemon
 settings_addonDaemon =  xbmcaddon.Addon( "service.headlines_daemon" )
 addonDirDaemon = settings_addonDaemon.getAddonInfo( "path" )
@@ -27,21 +22,23 @@ sys.path.append(addonDirDaemon)
 from headlines_parse import *
 
 #Teste si le repertoire script.headlines existe
-DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.headlines/")
+DATA_PATH = xbmc.translatePath( 
+    "special://profile/addon_data/script.headlines/")
 if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
-#Function Debug
 
+#Function Debug
 def debug(msg):
     """
     print message if DEBUG_LOG == True
     """
-    if DEBUG_LOG == True: print " [%s] : %s " % (__addonID__,msg)
+    if DEBUG_LOG == True: print " [%s] : %s " % (__addonID__, msg)
 
 #Nettoie le code HTML d'après rssclient de xbmc
 def htmlentitydecode(s):
     # code from http://snipplr.com/view.php?codeview&id=15261
     # First convert alpha entities (such as &eacute;)
-    # (Inspired from http://mail.python.org/pipermail/python-list/2007-June/443813.html)
+    # (Inspired from 
+    #http://mail.python.org/pipermail/python-list/2007-June/443813.html)
     def entity2char(m):
         entity = m.group(1)
         if entity in htmlentitydefs.name2codepoint:
@@ -67,12 +64,14 @@ def cleanText(txt):
     return p.sub('', txt)
 
 #Path où sont stockés les flux 
-DATA_PATH = xbmc.translatePath( "special://profile/addon_data/script.headlines/")
+DATA_PATH = xbmc.translatePath( 
+    "special://profile/addon_data/script.headlines/")
 if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 addon = xbmcaddon.Addon('script.headlines_client')
 debug('HEADLINES CLIENT')
 
+#Recupère les arguments envoyés par le skin qui a lancé le script
 for arg in sys.argv:
 
     param = str(arg).lower()
@@ -104,16 +103,14 @@ for arg in sys.argv:
            
 headlines = []
 #Récupère l'url du flux et le change en nom de fichier
-filename = re.sub('^http://.*/','Rss-',RssFeeds)
-filename = '%s/%s' % (DATA_PATH,filename)
+filename = re.sub('^http://.*/', 'Rss-', RssFeeds)
+filename = '%s/%s' % (DATA_PATH, filename)
 debug("=> %s-headlines" % filename)
 #Si il existe on l'ouvre
 if (os.path.isfile('%s-headlines' % filename)):
-    debug("146")
     pkl_file = open(('%s-headlines' % filename), 'rb')
     headlines = pickle.load(pkl_file)
     pkl_file.close()
-    debug(" 150")
 #Sinon on appelle la Class ParsRSS pour le parser puis le sauver sur disque
 else:
     debug("Erreur ouverture HEADLINES")
@@ -126,8 +123,9 @@ else:
         pkl_file.close()
     except:
         #Si il n'est pas encore récupéré, on crée une news avec INDISPONIBLE
-        headlines.append(('Indisponible',
-                     'Indisponible','Indisponible','Indisponible','Indisponible','Indisponible'))
+        headlines.append(('Indisponible', 'Indisponible', 
+                          'Indisponible','Indisponible',
+                          'Indisponible','Indisponible'))
 
 debug("Feed= %s " % RssFeeds)
 
@@ -138,7 +136,7 @@ NbNews = len(headlines)
 #Si il est > à la limite demandée, on ne récupére que limit
 if limit > NbNews: limit = NbNews
 
-for i in range(0,limit):
+for i in range(0, limit):
     #On défini les Properties 
     okno.setProperty('RSS.%s.Title' % i , headlines[i][0] )
     okno.setProperty('RSS.%s.Date' % i , headlines[i][1])
@@ -149,5 +147,4 @@ for i in range(0,limit):
     okno.setProperty('RSS.%s.Desc' % i , html)
     okno.setProperty('RSS.%s.Img' % i , headlines[i][4])
     okno.setProperty('RSS.%s.Video' % i , headlines[i][5])
-    debug("%i => %s " % (i,repr(headlines[i][0])))
-    
+    debug("%i => %s " % (i, repr(headlines[i][0])))
