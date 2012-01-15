@@ -13,7 +13,7 @@ __addonDir__ = __settings__.getAddonInfo( "path" )
 DEBUG_LOG = __addon__.getSetting( 'debug' )
 if 'true' in DEBUG_LOG : DEBUG_LOG = True
 else: DEBUG_LOG = False
-
+#DEBUG_LOG = True
 #Importation du module headlines_parse du script headlines_daemon
 settings_addonDaemon =  xbmcaddon.Addon( "service.headlines_daemon" )
 addonDirDaemon = settings_addonDaemon.getAddonInfo( "path" )
@@ -69,7 +69,8 @@ if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 addon = xbmcaddon.Addon('script.headlines_client')
 debug('HEADLINES CLIENT')
-
+#Vide prefix avant l'appel des args
+prefix = ''
 #Recupère les arguments envoyés par le skin qui a lancé le script
 for arg in sys.argv:
 
@@ -87,6 +88,11 @@ for arg in sys.argv:
     elif 'dialog=' in param:
         isWindow = False
         ID = int(param.replace('dialog=', ''))
+    if param.startswith('prefix='):
+        prefix = param.replace('prefix=', '')
+        if not prefix.endswith('.'):
+            prefix = prefix + '.'
+
     if 'feed=' in param:
         #feeds.append(param.replace('feed=', ''))
         RssFeeds = param.replace('feed=', '')
@@ -137,13 +143,14 @@ if limit > NbNews: limit = NbNews
 
 for i in range(0, limit):
     #On défini les Properties 
-    okno.setProperty('RSS.%s.Title' % i , headlines[i][0] )
-    okno.setProperty('RSS.%s.Date' % i , headlines[i][1])
+    debug('%sRSS.%s.Title' % (prefix,i))
+    okno.setProperty('%sRSS.%s.Title' % (prefix,i) , headlines[i][0] )
+    okno.setProperty('%sRSS.%s.Date' % (prefix,i) , headlines[i][1])
     description = re.sub('(<[bB][rR][ /]>)|(<[/ ]*[pP]>)', '[CR]',
                                  headlines[i][2], re.DOTALL)
     #On nettoie le code HTML
     html = cleanText(description)
-    okno.setProperty('RSS.%s.Desc' % i , html)
-    okno.setProperty('RSS.%s.Img' % i , headlines[i][4])
-    okno.setProperty('RSS.%s.Video' % i , headlines[i][5])
+    okno.setProperty('%sRSS.%s.Desc' % (prefix,i) , html)
+    okno.setProperty('%sRSS.%s.Img' % (prefix,i) , headlines[i][4])
+    okno.setProperty('%sRSS.%s.Video' % (prefix,i) , headlines[i][5])
     debug("%i => %s " % (i, repr(headlines[i][0])))
