@@ -12,8 +12,10 @@ where X is the number of the news you want to recover
 where Y is the prefix to differentiate them flow (optional)
 
 There are properties defined:
-         [Y.]RSS.X.Title: title of the news
-         [Y.]RSS.X.Date: date of the news
-         [Y.]RSS.X.Desc: What's in the news
-         [Y.]RSS.X.Img: Img File-related news, is False if no picture
-         [Y.]RSS.X.Video: Link to video, is empty if no video
+      [Y.]RSS.X.Title: title of the news
+      [Y.]RSS.X.Date: date of the news
+      [Y.]RSS.X.Desc: What's in the news
+      [Y.]RSS.X.Image: Img File-related news, is False if no picture
+      [Y.]RSS.X.Video: Link to video, is empty if no video
+      [Y.]RSS.X.MultiImages : Path for multiImages
+

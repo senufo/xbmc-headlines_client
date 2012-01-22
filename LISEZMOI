@@ -16,6 +16,7 @@ Il y a  properties définies :
       [Y.]RSS.X.Title : titre de la news
       [Y.]RSS.X.Date : date de la news
       [Y.]RSS.X.Desc : Contenu de la news
-      [Y.]RSS.X.Img : Fichier Img lié à la news, est à False si pas d'image
+      [Y.]RSS.X.Image : Fichier Img lié à la news, est à False si pas d'image
       [Y.]RSS.X.Video : Lien vers la vidéo, est vide si pas de vidéo
+      [Y.]RSS.X.MultiImages : Chemin pour le multiImages
 

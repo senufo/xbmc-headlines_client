@@ -151,6 +151,9 @@ for i in range(0, limit):
     #On nettoie le code HTML
     html = cleanText(description)
     okno.setProperty('%sRSS.%s.Desc' % (prefix,i) , html)
-    okno.setProperty('%sRSS.%s.Img' % (prefix,i) , headlines[i][4])
+    okno.setProperty('%sRSS.%s.Image' % (prefix,i) , headlines[i][4])
     okno.setProperty('%sRSS.%s.Video' % (prefix,i) , headlines[i][5])
+    okno.setProperty('%sRSS.%s.MultiImages' % (prefix,i) , '%s-img' % filename)
+    debug( 'FILENAME : %s-img' % filename)
+
     debug("%i => %s " % (i, repr(headlines[i][0])))
