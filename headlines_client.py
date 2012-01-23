@@ -142,7 +142,11 @@ NbNews = len(headlines)
 if limit > NbNews: limit = NbNews
 
 for i in range(0, limit):
-    #On défini les Properties 
+    #On défini les Properties d'apres headlines
+    #0 => title, 1 => date, 2=> description, 
+    #3 => content_type, 4 =>img_name,
+    #5 => link_video, 6 => NoNews
+
     debug('%sRSS.%s.Title' % (prefix,i))
     okno.setProperty('%sRSS.%s.Title' % (prefix,i) , headlines[i][0] )
     okno.setProperty('%sRSS.%s.Date' % (prefix,i) , headlines[i][1])
@@ -150,10 +154,15 @@ for i in range(0, limit):
                                  headlines[i][2], re.DOTALL)
     #On nettoie le code HTML
     html = cleanText(description)
-    okno.setProperty('%sRSS.%s.Desc' % (prefix,i) , html)
-    okno.setProperty('%sRSS.%s.Image' % (prefix,i) , headlines[i][4])
-    okno.setProperty('%sRSS.%s.Video' % (prefix,i) , headlines[i][5])
-    okno.setProperty('%sRSS.%s.MultiImages' % (prefix,i) , '%s-img' % filename)
-    debug( 'FILENAME : %s-img' % filename)
+    okno.setProperty('%sRSS.%s.Desc' % (prefix, i) , html)
+    okno.setProperty('%sRSS.%s.Image' % (prefix, i) , headlines[i][4])
+    okno.setProperty('%sRSS.%s.Video' % (prefix, i) , headlines[i][5])
+    okno.setProperty('%sRSS.%s.MultiImages' % (prefix, i) , 
+                     ('%s-img/%i' % (filename, headlines[i][6])))
+
+    debug( 'FILENAME : %s-img/%i' % (filename, headlines[i][6]) )
 
     debug("%i => %s " % (i, repr(headlines[i][0])))
+
+okno.setProperty('%sRSS.count' % prefix, str(NbNews))
+
