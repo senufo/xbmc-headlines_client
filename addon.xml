@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.headlines_client"
        name="Headlines Client for skinner"
-       version="0.0.8.2"
+       version="0.0.9"
        provider-name="senufo">
   <requires>
           <import addon="xbmc.python" version="2.0"/>
-          <import addon="service.headlines_daemon" version="0.0.7"/>
+          <import addon="service.headlines_daemon" version="0.0.9"/>
   </requires>
   <extension point="xbmc.python.script"
              library="headlines_client.py" />
