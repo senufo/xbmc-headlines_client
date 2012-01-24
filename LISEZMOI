@@ -19,4 +19,8 @@ Il y a  properties définies :
       [Y.]RSS.X.Image : Fichier Img lié à la news, est à False si pas d'image
       [Y.]RSS.X.Video : Lien vers la vidéo, est vide si pas de vidéo
       [Y.]RSS.X.MultiImages : Chemin pour le multiImages
+      [Y.]RSS.X.MultiImages : Répertoire avec les images de la news (utilisation avec le control MultiImage), contient des images seulement si SlideShowable esst à true
+      [Y.]RSS.X.ImageCount : Nb d'image liées à la news
+      [Y.]RSS.X.SlideShowable : Est à True si il y plusieurs images
+      [Y.]RSS.count : Nb de news pour le flux
 

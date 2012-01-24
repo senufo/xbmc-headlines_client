@@ -146,6 +146,7 @@ for i in range(0, limit):
     #0 => title, 1 => date, 2=> description, 
     #3 => content_type, 4 =>img_name,
     #5 => link_video, 6 => NoNews
+    #7 => ImageCount, 8 => SlideShowable
 
     debug('%sRSS.%s.Title' % (prefix,i))
     okno.setProperty('%sRSS.%s.Title' % (prefix,i) , headlines[i][0] )
@@ -159,6 +160,8 @@ for i in range(0, limit):
     okno.setProperty('%sRSS.%s.Video' % (prefix, i) , headlines[i][5])
     okno.setProperty('%sRSS.%s.MultiImages' % (prefix, i) , 
                      ('%s-img/%i' % (filename, headlines[i][6])))
+    okno.setProperty('%sRSS.%s.ImageCount' % (prefix, i) , headlines[i][7])
+    okno.setProperty('%sRSS.%s.SlideShowable' % (prefix, i) , headlines[i][8])
 
     debug( 'FILENAME : %s-img/%i' % (filename, headlines[i][6]) )
 

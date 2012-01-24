@@ -17,5 +17,8 @@ There are properties defined:
       [Y.]RSS.X.Desc: What's in the news
       [Y.]RSS.X.Image: Img File-related news, is False if no picture
       [Y.]RSS.X.Video: Link to video, is empty if no video
-      [Y.]RSS.X.MultiImages : Path for multiImages
+      [Y.]RSS.X.MultiImages : Path to directory containing images attached to item (usage in MultiImage control or Slideshow builtin), content images only if SlideShowable is set to true
+      [Y.]RSS.X.ImageCount : count of images attached to item
+      [Y.]RSS.X.SlideShowable : if set to true it means we can use MultiImage control or builtin Slideshow function
+      [Y.]RSS.count : holds count of RSS items passed to skin (usefull if script will return less items than skinner wanted - limit parameter)
 
