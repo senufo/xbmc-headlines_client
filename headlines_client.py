@@ -160,7 +160,7 @@ for i in range(0, limit):
     okno.setProperty('%sRSS.%s.Video' % (prefix, i) , headlines[i][5])
     okno.setProperty('%sRSS.%s.MultiImages' % (prefix, i) , 
                      ('%s-img/%i' % (filename, headlines[i][6])))
-    okno.setProperty('%sRSS.%s.ImageCount' % (prefix, i) , headlines[i][7])
+    okno.setProperty('%sRSS.%s.ImageCount' % (prefix, i) , str(headlines[i][7]))
     okno.setProperty('%sRSS.%s.SlideShowable' % (prefix, i) , headlines[i][8])
 
     debug( 'FILENAME : %s-img/%i' % (filename, headlines[i][6]) )
