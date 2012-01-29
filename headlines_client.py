@@ -130,6 +130,7 @@ else:
         #Si il n'est pas encore récupéré, on crée une news avec INDISPONIBLE
         headlines.append(('Indisponible', 'Indisponible', 
                           'Indisponible','Indisponible',
+                          'Indisponible','Indisponible',
                           'Indisponible','Indisponible', 'Indisponible'))
 
 debug("Feed= %s " % RssFeeds)
