@@ -22,7 +22,7 @@ from headlines_parse import *
 
 #Teste si le repertoire script.headlines existe
 DATA_PATH = xbmc.translatePath( 
-    "special://profile/addon_data/script.headlines/")
+    "special://profile/addon_data/script.headlines")
 if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 #Function Debug
@@ -63,9 +63,9 @@ def cleanText(txt):
     return p.sub('', txt)
 
 #Path où sont stockés les flux 
-DATA_PATH = xbmc.translatePath( 
-    "special://profile/addon_data/script.headlines/")
-if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
+#DATA_PATH = xbmc.translatePath( 
+#    "special://profile/addon_data/script.headlines")
+#if not os.path.exists(DATA_PATH): os.makedirs(DATA_PATH)
 
 addon = xbmcaddon.Addon('script.headlines_client')
 debug('HEADLINES CLIENT')
@@ -110,6 +110,9 @@ headlines = []
 #Récupère l'url du flux et le change en nom de fichier
 filename = re.sub('^http://.*/', 'Rss-', RssFeeds)
 filename = '%s/%s' % (DATA_PATH, filename)
+filename = xbmc.translatePath( filename )
+debug( "xbmc.translatePath( filename ) = %s "  % filename )
+         
 debug("=> %s-headlines" % filename)
 #Si il existe on l'ouvre
 if (os.path.isfile('%s-headlines' % filename)):
@@ -165,7 +168,7 @@ for i in range(0, limit):
     okno.setProperty('%sRSS.%s.SlideShowable' % (prefix, i) ,
                       str(headlines[i][8]))
 
-    debug( 'FILENAME : %s-img/%i' % (filename, headlines[i][6]) )
+    debug( 'FILENAME : %s-img/%s' % (filename, str(headlines[i][6])) )
 
     debug("%i => %s " % (i, repr(headlines[i][0])))
 
