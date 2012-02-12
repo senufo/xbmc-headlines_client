@@ -161,7 +161,25 @@ for i in range(0, limit):
     html = cleanText(description)
     okno.setProperty('%sRSS.%s.Desc' % (prefix, i) , html)
     okno.setProperty('%sRSS.%s.Image' % (prefix, i) , headlines[i][4])
-    okno.setProperty('%sRSS.%s.Video' % (prefix, i) , headlines[i][5])
+    ##Traitement des liens YT
+    link_video = headlines[i][5]
+    if 'youtube.com/v' in link_video:
+        vid_ids =  re.findall('http://www.youtube.com/v/(.{11})\??',
+                                       link_video, re.DOTALL )
+        for id in vid_ids:
+            link_video = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % id
+        debug("VIDEO YT = %s " % link_video)
+            
+    if 'youtube.com/watch' in link_video:
+        vid_ids =  re.findall('youtube.com/watch\?v=(.{11})\??',
+                                       link_video, re.DOTALL )
+        for id in vid_ids:
+            link_video = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % id
+        debug("VIDEO YT = %s " % link_video)
+    ################ Fin test YT link 
+
+    #okno.setProperty('%sRSS.%s.Video' % (prefix, i) , headlines[i][5])
+    okno.setProperty('%sRSS.%s.Video' % (prefix, i) , link_video)
     okno.setProperty('%sRSS.%s.MultiImages' % (prefix, i) , 
                      ('%s-img/%s' % (filename, str(headlines[i][6]))))
     okno.setProperty('%sRSS.%s.ImageCount' % (prefix, i) , str(headlines[i][7]))
@@ -171,6 +189,6 @@ for i in range(0, limit):
     debug( 'FILENAME : %s-img/%s' % (filename, str(headlines[i][6])) )
 
     debug("%i => %s " % (i, repr(headlines[i][0])))
-
+    debug( '=> Property VIDEO = %sRSS.%s.Video' % (prefix, i))
 okno.setProperty('%sRSS.count' % prefix, str(NbNews))
 
